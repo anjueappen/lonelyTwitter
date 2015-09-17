@@ -1,6 +1,8 @@
 package ca.ualberta.cs.lonelytwitter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by anju on 16/09/15.
@@ -8,6 +10,7 @@ import java.util.Date;
 public abstract class Tweet implements Tweetable{
     private String tweet;
     protected Date date;
+    private ArrayList<Mood> moods; 
 
     public void setTweet(String tweet) throws IllegalArgumentException{
         if (tweet.length() <= 140){
