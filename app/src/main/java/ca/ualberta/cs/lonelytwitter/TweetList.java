@@ -1,14 +1,14 @@
 package ca.ualberta.cs.lonelytwitter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 /**
  * Created by anju on 30/09/15.
  */
-public class TweetList {
+public class TweetList  implements  MyObservable{
+    private ArrayList<MyObserver> myObservers = new ArrayList<MyObserver>();
     private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
     public void addTweet(Tweet tweet){
@@ -17,6 +17,7 @@ public class TweetList {
         }
         else {
             tweets.add(tweet);
+            notifyObservers();
         }
 
     }
@@ -46,4 +47,13 @@ public class TweetList {
         return tweets;
     }
 
+    public void addObserver(MyObserver o) {
+        myObservers.add(o);
+    }
+
+    public void notifyObservers() {
+        for(MyObserver observer: myObservers){
+            observer.myNotify();
+        }
+    }
 }

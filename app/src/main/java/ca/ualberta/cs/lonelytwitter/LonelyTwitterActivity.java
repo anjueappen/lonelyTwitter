@@ -20,35 +20,35 @@ import android.widget.ListView;
 
 public class LonelyTwitterActivity extends Activity {
 
-	private static final String FILENAME = "file.sav";
-	private EditText bodyText;
-	private ListView oldTweetsList;
+	private static final String FILENAME = "file.sav"; //model
+	private EditText bodyText; //model
+	private ListView oldTweetsList; //model
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-        ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
+        ArrayList<Tweet> tweetList = new ArrayList<Tweet>(); //model
 
 		Tweet importantTweet = new ImportantTweet("");
         try {
-            importantTweet.setTweet("Hah!");
+            importantTweet.setTweet("Hah!"); //controller
         }catch (IllegalArgumentException e){
             throw new RuntimeException(e);
         }
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main);//view
 
-		bodyText = (EditText) findViewById(R.id.body);
-		Button saveButton = (Button) findViewById(R.id.save);
-		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
+		bodyText = (EditText) findViewById(R.id.body); //model
+		Button saveButton = (Button) findViewById(R.id.save); //controller
+		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList); //view
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				setResult(RESULT_OK);
-				String text = bodyText.getText().toString();
-				saveInFile(text, new Date(System.currentTimeMillis()));
-				finish();
+				setResult(RESULT_OK); //model
+				String text = bodyText.getText().toString(); //model
+				saveInFile(text, new Date(System.currentTimeMillis())); //controller
+				finish(); //controller 
 
 			}
 		});
@@ -57,22 +57,22 @@ public class LonelyTwitterActivity extends Activity {
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
-		super.onStart();
-		String[] tweets = loadFromFile();
+		super.onStart(); //view
+		String[] tweets = loadFromFile(); //model
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item, tweets);
-		oldTweetsList.setAdapter(adapter);
+				R.layout.list_item, tweets); //controller
+		oldTweetsList.setAdapter(adapter); //controller
 	}
 
 	private String[] loadFromFile() {
-		ArrayList<String> tweets = new ArrayList<String>();
+		ArrayList<String> tweets = new ArrayList<String>(); //model
 		try {
-			FileInputStream fis = openFileInput(FILENAME);
-			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			String line = in.readLine();
+			FileInputStream fis = openFileInput(FILENAME); //controller
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis)); //controller
+			String line = in.readLine(); //model
 			while (line != null) {
-				tweets.add(line);
-				line = in.readLine();
+				tweets.add(line); //controller
+				line = in.readLine(); //controller
 			}
 
 		} catch (FileNotFoundException e) {
@@ -82,7 +82,7 @@ public class LonelyTwitterActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return tweets.toArray(new String[tweets.size()]);
+		return tweets.toArray(new String[tweets.size()]); //model
 	}
 	
 	private void saveInFile(String text, Date date) {

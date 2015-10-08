@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by anju on 30/09/15.
  */
-public class TweetListTest extends ActivityInstrumentationTestCase2{
+public class TweetListTest extends ActivityInstrumentationTestCase2 implements MyObserver{
+    private boolean wasNotified = false;
+
     public TweetListTest() {
         super(LonelyTwitterActivity.class);
     }
@@ -66,7 +68,7 @@ public class TweetListTest extends ActivityInstrumentationTestCase2{
 
     }
 
-    public void testGetTweets(){
+   /* public void testGetTweets(){
         TweetList tweetList = new TweetList();
         Date now = new Date();
         try{
@@ -86,9 +88,21 @@ public class TweetListTest extends ActivityInstrumentationTestCase2{
         expected.add(tweet);
         expected.add(tweet2);
         assertEquals(returnedList.toArray(), expected);
+    }*/
+
+    public void myNotify() {
+        wasNotified=true;
     }
 
+    public void testTweetListChanged(){
+        TweetList tweetList = new TweetList();
+        Tweet tweet = new NormalTweet("anju");
+        tweetList.addObserver(this);
+        wasNotified = false;
+        assertFalse(wasNotified);
+        tweetList.addTweet(tweet);
+        assertTrue(wasNotified);
+    }
 
-
-
+    private ArrayList<MyObservable> observables = new ArrayList<MyObservable>();
 }
