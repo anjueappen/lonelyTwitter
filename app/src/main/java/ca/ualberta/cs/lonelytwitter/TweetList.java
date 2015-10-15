@@ -56,4 +56,8 @@ public class TweetList  implements  MyObservable{
             observer.myNotify();
         }
     }
+
+    public void clear(){
+        tweets.clear();
+    }
 }
